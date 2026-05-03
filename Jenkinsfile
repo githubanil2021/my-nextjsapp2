@@ -29,7 +29,7 @@ pipeline {
  stage('Deploy') {
   steps {
     withCredentials([
-      string(credentialsId: 'vercel-token', variable: 'VERCEL_TOKEN'),
+      string(credentialsId: 'vercel_token', variable: 'VERCEL_TOKEN'),
       string(credentialsId: 'VERCEL_ORG_ID', variable: 'VERCEL_ORG_ID'),
       string(credentialsId: 'VERCEL_PROJECT_ID', variable: 'VERCEL_PROJECT_ID')
     ]) {
