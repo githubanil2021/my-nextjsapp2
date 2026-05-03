@@ -27,10 +27,11 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                bat 'npx vercel --prod --yes --token=%VERCEL_TOKEN%'
-                // Add your deploy commands here
-            }
-        }
+    steps {
+        bat "npx vercel pull --yes --environment=production --token=%VERCEL_TOKEN%"
+        bat "npx vercel build --prod --token=%VERCEL_TOKEN%"
+        bat "npx vercel deploy --prebuilt --prod --token=%VERCEL_TOKEN%"
+    }
+}
     }
 }
