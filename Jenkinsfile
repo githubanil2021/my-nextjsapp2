@@ -26,12 +26,19 @@ pipeline {
                 // Add your build commands here
             }
         }
-        stage('Deploy') {
-    steps {
-        bat "npx vercel pull --yes --environment=production --token=%VERCEL_TOKEN%"
-        bat "npx vercel build --prod --token=%VERCEL_TOKEN%"
-        bat "npx vercel deploy --prebuilt --prod --token=%VERCEL_TOKEN%"
+ stage('Deploy') {
+  steps {
+    withCredentials([
+      string(credentialsId: 'vercel-token', variable: 'VERCEL_TOKEN'),
+      string(credentialsId: 'VERCEL_ORG_ID', variable: 'VERCEL_ORG_ID'),
+      string(credentialsId: 'VERCEL_PROJECT_ID', variable: 'VERCEL_PROJECT_ID')
+    ]) {
+      bat "npx vercel pull --yes --environment=production --token=%VERCEL_TOKEN%"
+      bat "npx vercel build --prod --token=%VERCEL_TOKEN%"
+      bat "npx vercel deploy --prebuilt --prod --token=%VERCEL_TOKEN%"
     }
+  }
 }
+
     }
 }
