@@ -33,6 +33,10 @@ pipeline {
       string(credentialsId: 'VERCEL_ORG_ID', variable: 'VERCEL_ORG_ID'),
       string(credentialsId: 'VERCEL_PROJECT_ID', variable: 'VERCEL_PROJECT_ID')
     ]) {
+      // 🔥 delete old vercel cache
+      bat "rmdir /s /q .vercel || exit 0"
+
+      // pull project settings using IDs
       bat "npx vercel pull --yes --environment=production --token=%VERCEL_TOKEN%"
       bat "npx vercel build --prod --token=%VERCEL_TOKEN%"
       bat "npx vercel deploy --prebuilt --prod --token=%VERCEL_TOKEN%"
